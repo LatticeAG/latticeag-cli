@@ -1,0 +1,34 @@
+{
+  "$schema": "latticeag.events/1.0",
+  "schema_version": 1,
+  "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "seq": 3,
+  "ts": "2026-08-17T13:57:00.123Z",
+  "run_id": "01ARZ3NDEKTSV4RRFFQ69G5FB0",
+  "session_id": "01ARZ3NDEKTSV4RRFFQ69G5FB1",
+  "producer": {
+    "product": "lexverdict",
+    "adapter": "@latticeag/adapter-lexverdict",
+    "adapter_version": "0.1.0"
+  },
+  "correlation_id": "01ARZ3NDEKTSV4RRFFQ69G5FB2",
+  "causation_id": "01ARZ3NDEKTSV4RRFFQ69G5FB3",
+  "redaction": {
+    "applied": true,
+    "keys": ["rawText"],
+    "pattern_hits": 0
+  },
+  "name": "verdict",
+  "payload": {
+    "verdict": "steer",
+    "confidence": 0.84,
+    "message": "goal asked for production env",
+    "tool_call": "write_file {\"path\":\"out/config.yaml\",\"contents\":\"env: staging\"}",
+    "goal": "Write production config.yaml with env: production and replicas: 3",
+    "result": "{\"ok\":true}",
+    "tool_call_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "goal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "result_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "latency_ms": 40
+  }
+}

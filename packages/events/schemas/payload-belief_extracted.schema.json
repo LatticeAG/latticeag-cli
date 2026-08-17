@@ -1,0 +1,156 @@
+{
+  "$ref": "#/definitions/Payload_belief_extracted",
+  "definitions": {
+    "Payload_belief_extracted": {
+      "type": "object",
+      "properties": {
+        "belief": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "causal",
+                "assumption",
+                "intention",
+                "evidence",
+                "uncertainty",
+                "contradiction",
+                "planning",
+                "self-correction"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "action_taken": {
+              "type": "string"
+            },
+            "line": {
+              "type": "integer"
+            },
+            "axion_timestamp_ms": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "text",
+            "confidence",
+            "line",
+            "axion_timestamp_ms"
+          ],
+          "additionalProperties": false
+        },
+        "batch": {
+          "type": "object",
+          "properties": {
+            "spec": {
+              "type": "string",
+              "const": "axion.belief_batch.v1"
+            },
+            "calls_in_session": {
+              "type": "integer"
+            },
+            "provider": {
+              "type": "string",
+              "enum": [
+                "openai",
+                "anthropic"
+              ]
+            },
+            "model_name": {
+              "type": "string"
+            },
+            "inbound_message_count": {
+              "type": "integer"
+            },
+            "redactions": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "spec",
+            "calls_in_session",
+            "redactions"
+          ],
+          "additionalProperties": false
+        },
+        "action": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "provider": {
+              "type": "string",
+              "enum": [
+                "openai",
+                "anthropic"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "tool_calls",
+                "tool_use"
+              ]
+            },
+            "argument_fingerprint": {
+              "type": "string"
+            },
+            "argument_fingerprint_source": {
+              "type": "string",
+              "enum": [
+                "canonical",
+                "raw"
+              ]
+            },
+            "argument_bytes": {
+              "type": "integer"
+            },
+            "source_class": {
+              "type": "string",
+              "const": "tool_observed"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "provider",
+            "source",
+            "argument_fingerprint",
+            "argument_fingerprint_source",
+            "argument_bytes",
+            "source_class"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "belief",
+        "batch"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

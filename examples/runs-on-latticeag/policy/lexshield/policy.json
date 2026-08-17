@@ -1,0 +1,16 @@
+{
+  "pack": "runs-on-latticeag-demo",
+  "version": "0.1.0",
+  "default": "ALLOW",
+  "rules": [
+    {
+      "id": "allow-write-config",
+      "tool": "write_file",
+      "decision": "ALLOW",
+      "when": {
+        "path": "out/config.yaml"
+      },
+      "reason": "demo pack allows write_file to out/config.yaml"
+    }
+  ]
+}

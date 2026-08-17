@@ -1,0 +1,35 @@
+{
+  "name": "@latticeag/events-tui",
+  "version": "0.1.0",
+  "description": "Ink TUI for latticeag events.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@latticeag/events": "workspace:*",
+    "ink": "^5.2.1",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "@types/react": "^18.3.18",
+    "ink-testing-library": "^4.0.0",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.9"
+  }
+}

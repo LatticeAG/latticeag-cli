@@ -1,0 +1,36 @@
+{
+  "name": "@latticeag/events",
+  "version": "0.1.0",
+  "description": "Canonical LatticeAG event envelope, payloads, parse, and codegen.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "codegen": "tsx src/codegen.ts",
+    "check": "tsc --noEmit && vitest run && tsx src/codegen.ts --check",
+    "prepublishOnly": "pnpm check"
+  },
+  "dependencies": {
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "tsx": "^4.19.3",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.9",
+    "zod-to-json-schema": "^3.24.5"
+  }
+}

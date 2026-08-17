@@ -1,0 +1,22 @@
+[
+  {
+    "key": "fixture-approval-1",
+    "request_id": "req-approval-1",
+    "status": "approved",
+    "title": "Approve write_file production config.yaml",
+    "action": "approve",
+    "workspace_id": "ws_demo",
+    "agent_id": "ag_demo",
+    "resolved_at": "2026-08-17T13:57:00.123Z",
+    "resolved_by": "auto-approve-test",
+    "priority": "normal",
+    "receipt": {
+      "request_id": "req-approval-1",
+      "execution_id": "exec-1",
+      "tier": "agent_asserted",
+      "action": "write_file",
+      "issued_at": "2026-08-17T13:57:00.123Z",
+      "payload_sha256": "5c59215de324d09f6833dae82c092822d16888e0dc679ceb3a63415a88005830"
+    }
+  }
+]

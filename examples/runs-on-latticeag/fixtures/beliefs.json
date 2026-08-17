@@ -1,0 +1,21 @@
+{
+  "spec": "axion.belief_batch.v1",
+  "sessionId": "ses_demo",
+  "timestamp": 1755439020123,
+  "provider": "openai",
+  "modelName": "gpt-4o",
+  "callsInSession": 1,
+  "inboundMessageCount": 2,
+  "redactions": 0,
+  "beliefs": [
+    {
+      "id": "belief-assumption-1",
+      "type": "assumption",
+      "belief": "staging shares prod credentials",
+      "confidence": 0.5,
+      "timestamp": 1755439020123,
+      "line": 1
+    }
+  ],
+  "actions": []
+}

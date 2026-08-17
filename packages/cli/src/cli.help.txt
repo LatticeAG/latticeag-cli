@@ -1,0 +1,24 @@
+Usage: latticeag [options] [command]
+
+The LatticeAG stack as one command. Every product event, one schema.
+
+Options:
+  -V, --version         Print CLI semver and exit
+  --config <path>       Path to latticeag.json; sets LATTICEAG_CONFIG for this
+                        process
+  --cwd <dir>           Change working directory before config discovery
+  --json                Machine JSON on stdout, diagnostics on stderr
+  --quiet               No stderr except errors
+  --verbose             Extra stderr progress
+  --no-color            Disable ANSI color; also honors NO_COLOR
+  -h, --help            display help for command
+
+Commands:
+  init [options] [dir]  Scaffold a project.
+  run [options]         Attach and execute.
+  dev [options]         Run with a live event TUI.
+  events [options]      Inspect JSONL.
+  doctor [options]      Check the local latticeag setup.
+  products [options]    List catalog products and adapter status.
+  version [options]     Print latticeag and workspace package versions.
+  help [command]        display help for command

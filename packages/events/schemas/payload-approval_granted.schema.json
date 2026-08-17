@@ -1,0 +1,67 @@
+{
+  "$ref": "#/definitions/Payload_approval_granted",
+  "definitions": {
+    "Payload_approval_granted": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "const": "approved"
+        },
+        "action": {
+          "type": "string"
+        },
+        "resolved_by": {
+          "type": "string"
+        },
+        "resolved_at": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "normal",
+            "high",
+            "critical"
+          ]
+        }
+      },
+      "required": [
+        "request_id",
+        "key",
+        "title",
+        "workspace_id",
+        "agent_id",
+        "status",
+        "action",
+        "resolved_at",
+        "priority"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "latticeag.viscompile.diff",
+  "schema_version": 1,
+  "summary": {
+    "unchanged": 0,
+    "added": 0,
+    "removed": 0,
+    "changed": 1,
+    "regressions": 1,
+    "improvements": 0
+  },
+  "cases": [
+    {
+      "id": "runs-on-latticeag",
+      "status": "changed",
+      "regression": true,
+      "changed_fields": [
+        "tool_calls"
+      ]
+    }
+  ]
+}

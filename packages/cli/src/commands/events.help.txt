@@ -1,0 +1,25 @@
+Usage: latticeag events [options]
+
+Inspect JSONL.
+
+Options:
+  --follow                     Tail after printing existing lines
+  --replay <path>              Read this file instead of config log_path
+  --from-seq <n>               Skip lines with seq < n (default: "1")
+  --type <name>                Filter name (repeatable) (default: [])
+  --run-id <ulid>              Filter by run id
+  --session-id <id>            Filter by session id
+  --format <text|json|ndjson>  text if TTY else ndjson (choices: "text",
+                               "json", "ndjson")
+  --strict-names               Exit 1 on UnknownLatticeEvent
+  --no-redact                  Requires TTY and LATTICEAG_ALLOW_UNREDACTED=1
+  --limit <n>                  0 means unlimited (default: "0")
+  --config <path>              Path to latticeag.json; sets LATTICEAG_CONFIG
+                               for this process
+  --cwd <dir>                  Change working directory before config discovery
+  --json                       Machine JSON on stdout, diagnostics on stderr
+  --quiet                      No stderr except errors
+  --verbose                    Extra stderr progress
+  --no-color                   Disable ANSI color; also honors NO_COLOR
+  -V, --version                Print CLI semver and exit
+  -h, --help                   display help for command

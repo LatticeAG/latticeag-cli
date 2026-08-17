@@ -1,0 +1,19 @@
+Usage: latticeag products [options]
+
+List catalog products and adapter status.
+
+Options:
+  --status <wired|available|stub|all>  Filter adapter status (choices: "wired",
+                                       "available", "stub", "all", default:
+                                       "all")
+  --config <path>                      Path to latticeag.json; sets
+                                       LATTICEAG_CONFIG for this process
+  --cwd <dir>                          Change working directory before config
+                                       discovery
+  --json                               Machine JSON on stdout, diagnostics on
+                                       stderr
+  --quiet                              No stderr except errors
+  --verbose                            Extra stderr progress
+  --no-color                           Disable ANSI color; also honors NO_COLOR
+  -V, --version                        Print CLI semver and exit
+  -h, --help                           display help for command

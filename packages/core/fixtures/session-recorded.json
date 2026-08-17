@@ -1,0 +1,18 @@
+{
+  "visreplay_schema": "visreplay/session/1.0",
+  "visreplay_session_id": "vrs-fixture-1",
+  "session_name": "fixture-session",
+  "agent_type": "custom",
+  "started_at": "2026-08-17T13:57:00.123Z",
+  "ended_at": "2026-08-17T13:57:01.123Z",
+  "path": ".latticeag/sessions/fixture.vrs",
+  "event_count": 1,
+  "event_counts": {
+    "input": 1,
+    "reasoning": 0,
+    "tool_call": 0,
+    "tool_result": 0,
+    "output": 0,
+    "error": 0
+  }
+}

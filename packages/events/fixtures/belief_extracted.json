@@ -1,0 +1,39 @@
+{
+  "$schema": "latticeag.events/1.0",
+  "schema_version": 1,
+  "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "seq": 1,
+  "ts": "2026-08-17T13:57:00.123Z",
+  "run_id": "01ARZ3NDEKTSV4RRFFQ69G5FB0",
+  "session_id": "01ARZ3NDEKTSV4RRFFQ69G5FB1",
+  "producer": {
+    "product": "axion",
+    "adapter": "@latticeag/adapter-axion",
+    "adapter_version": "0.1.0"
+  },
+  "correlation_id": "01ARZ3NDEKTSV4RRFFQ69G5FB2",
+  "redaction": {
+    "applied": true,
+    "keys": ["rawText"],
+    "pattern_hits": 0
+  },
+  "name": "belief_extracted",
+  "payload": {
+    "belief": {
+      "id": "belief-assumption-1",
+      "type": "assumption",
+      "text": "staging shares prod credentials",
+      "confidence": 0.5,
+      "line": 1,
+      "axion_timestamp_ms": 1755439020123
+    },
+    "batch": {
+      "spec": "axion.belief_batch.v1",
+      "calls_in_session": 1,
+      "provider": "openai",
+      "model_name": "gpt-4o",
+      "inbound_message_count": 2,
+      "redactions": 1
+    }
+  }
+}

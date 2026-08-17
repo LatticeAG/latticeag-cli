@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/Payload_receipt_issued",
+  "definitions": {
+    "Payload_receipt_issued": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "agent_asserted",
+            "gateway_verified",
+            "downstream_attested"
+          ]
+        },
+        "action": {
+          "type": "string"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "metadata",
+            "fixture"
+          ]
+        }
+      },
+      "required": [
+        "request_id",
+        "execution_id",
+        "tier",
+        "action",
+        "issued_at",
+        "payload_sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

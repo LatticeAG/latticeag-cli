@@ -1,0 +1,38 @@
+{
+  "name": "@latticeag/adapter-visreplay",
+  "version": "0.1.0",
+  "description": "VisReplay session recording adapter for latticeag.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./map": {
+      "types": "./dist/map.d.ts",
+      "import": "./dist/map.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@latticeag/bus": "workspace:*",
+    "@latticeag/config": "workspace:*",
+    "@latticeag/events": "workspace:*",
+    "@latticeag/visreplay": "file:/home/ubuntu/repos/visreplay"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.9"
+  }
+}

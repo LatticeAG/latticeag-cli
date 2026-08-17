@@ -1,0 +1,41 @@
+{
+  "name": "@latticeag/cli",
+  "version": "0.1.0",
+  "description": "The LatticeAG stack as one command. Every product event, one schema.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "bin": {
+    "latticeag": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build": "pnpm --filter @latticeag/events --filter @latticeag/config --filter @latticeag/bus --filter @latticeag/adapter-axion --filter @latticeag/adapter-visreplay --filter @latticeag/adapter-lexverdict --filter @latticeag/adapter-vekinbox --filter @latticeag/adapter-viscompile --filter @latticeag/events-tui build && tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@latticeag/adapter-axion": "workspace:*",
+    "@latticeag/adapter-lexverdict": "workspace:*",
+    "@latticeag/adapter-stub": "workspace:*",
+    "@latticeag/adapter-vekinbox": "workspace:*",
+    "@latticeag/adapter-viscompile": "workspace:*",
+    "@latticeag/adapter-visreplay": "workspace:*",
+    "@latticeag/bus": "workspace:*",
+    "@latticeag/config": "workspace:*",
+    "@latticeag/events": "workspace:*",
+    "@latticeag/events-tui": "workspace:*",
+    "@latticeag/visreplay": "file:/home/ubuntu/repos/visreplay",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.7",
+    "execa": "^9.5.2",
+    "string-argv": "^0.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "tsx": "^4.19.3",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.9"
+  }
+}

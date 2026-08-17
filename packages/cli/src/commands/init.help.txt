@@ -1,0 +1,25 @@
+Usage: latticeag init [options] [dir]
+
+Scaffold a project.
+
+Arguments:
+  dir                      Directory to initialize (default: ".")
+
+Options:
+  --template <blank|demo>  blank or demo template (choices: "blank", "demo",
+                           default: "blank")
+  --adapters <list>        Comma list of slugs to set enabled: true (default:
+                           "axion,visreplay,lexverdict,vekinbox")
+  --force                  Overwrite latticeag.json
+  --git                    Append latticeag ignore rules to .gitignore
+                           (default: true)
+  --no-git                 Skip gitignore edit
+  --config <path>          Path to latticeag.json; sets LATTICEAG_CONFIG for
+                           this process
+  --cwd <dir>              Change working directory before config discovery
+  --json                   Machine JSON on stdout, diagnostics on stderr
+  --quiet                  No stderr except errors
+  --verbose                Extra stderr progress
+  --no-color               Disable ANSI color; also honors NO_COLOR
+  -V, --version            Print CLI semver and exit
+  -h, --help               display help for command

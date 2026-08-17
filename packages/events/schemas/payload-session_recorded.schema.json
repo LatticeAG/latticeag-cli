@@ -1,0 +1,81 @@
+{
+  "$ref": "#/definitions/Payload_session_recorded",
+  "definitions": {
+    "Payload_session_recorded": {
+      "type": "object",
+      "properties": {
+        "visreplay_schema": {
+          "type": "string",
+          "const": "visreplay/session/1.0"
+        },
+        "visreplay_session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_name": {
+          "type": "string"
+        },
+        "agent_type": {
+          "type": "string"
+        },
+        "started_at": {
+          "type": "string"
+        },
+        "ended_at": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_count": {
+          "type": "integer"
+        },
+        "event_counts": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "integer"
+            },
+            "reasoning": {
+              "type": "integer"
+            },
+            "tool_call": {
+              "type": "integer"
+            },
+            "tool_result": {
+              "type": "integer"
+            },
+            "output": {
+              "type": "integer"
+            },
+            "error": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "input",
+            "reasoning",
+            "tool_call",
+            "tool_result",
+            "output",
+            "error"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "visreplay_schema",
+        "visreplay_session_id",
+        "session_name",
+        "agent_type",
+        "started_at",
+        "path",
+        "event_count",
+        "event_counts"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

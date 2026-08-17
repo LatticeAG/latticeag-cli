@@ -1,0 +1,15 @@
+[
+  {
+    "key": "RUN.CAUSE",
+    "request_id": "req_01ARZ3NDEKTSV4RRFFQ69G5FAX",
+    "status": "approved",
+    "title": "Approve after verdict",
+    "action": "write_file",
+    "workspace_id": "ws_test",
+    "agent_id": "agt_test",
+    "resolved_at": "2026-08-17T13:57:00.123Z",
+    "resolved_by": "auto-approve-test",
+    "priority": "normal",
+    "note": "fixture"
+  }
+]

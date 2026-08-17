@@ -1,0 +1,21 @@
+{
+  "name": "@latticeag/example-runs-on-latticeag",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Flagship demo: LatticeAG runs on LatticeAG.",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@latticeag/cli": "workspace:*",
+    "openai": "^4.70.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "tsx": "^4.19.3",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.9"
+  }
+}

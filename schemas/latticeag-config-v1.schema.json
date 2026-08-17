@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://latticeag.dev/schemas/latticeag-config/v1.json",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "schema_version": {
+      "type": "number",
+      "const": 1
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "run_id_prefix": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,15}$",
+          "default": "run"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "bus": {
+      "type": "object",
+      "properties": {
+        "log_path": {
+          "type": "string",
+          "minLength": 1,
+          "default": ".latticeag/events.jsonl"
+        },
+        "ring_capacity": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 1000000,
+          "default": 10000
+        },
+        "overflow_block_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000,
+          "default": 5000
+        },
+        "overflow": {
+          "type": "string",
+          "enum": [
+            "block_then_drop",
+            "drop"
+          ],
+          "default": "block_then_drop"
+        },
+        "max_log_bytes": {
+          "type": "integer",
+          "minimum": 1048576,
+          "maximum": 4294967296,
+          "default": 268435456
+        },
+        "persist_fail": {
+          "type": "string",
+          "enum": [
+            "throw",
+            "log"
+          ],
+          "default": "throw"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ingest": {
+      "type": "object",
+      "properties": {
+        "bind": {
+          "type": "string",
+          "const": "127.0.0.1"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535,
+          "default": 9847
+        },
+        "path": {
+          "type": "string",
+          "const": "/v1/ingest"
+        }
+      },
+      "required": [
+        "bind",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "adapters": {
+      "type": "object",
+      "properties": {
+        "axion": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "webhook",
+                "poll"
+              ],
+              "default": "webhook"
+            },
+            "base_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "webhook_path": {
+              "type": "string",
+              "const": "/v1/ingest/axion"
+            },
+            "poll_interval_ms": {
+              "type": "integer",
+              "minimum": 200,
+              "maximum": 10000,
+              "default": 1000
+            }
+          },
+          "required": [
+            "enabled",
+            "base_url",
+            "webhook_path"
+          ],
+          "additionalProperties": false
+        },
+        "visreplay": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "session_dir": {
+              "type": "string",
+              "minLength": 1
+            },
+            "agent_type": {
+              "type": "string",
+              "minLength": 1,
+              "default": "custom"
+            }
+          },
+          "required": [
+            "enabled",
+            "session_dir"
+          ],
+          "additionalProperties": false
+        },
+        "lexverdict": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "base_url_env": {
+              "type": "string",
+              "const": "LEXVERDICT_URL"
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 60000,
+              "default": 15000
+            }
+          },
+          "required": [
+            "enabled",
+            "base_url_env"
+          ],
+          "additionalProperties": false
+        },
+        "vekinbox": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "base_url_env": {
+              "type": "string",
+              "const": "VEKINBOX_URL"
+            },
+            "api_key_env": {
+              "type": "string",
+              "const": "VEKINBOX_API_KEY"
+            },
+            "workspace_id_env": {
+              "type": "string",
+              "const": "VEKINBOX_WORKSPACE_ID"
+            },
+            "agent_id_env": {
+              "type": "string",
+              "const": "VEKINBOX_AGENT_ID"
+            },
+            "timeout": {
+              "type": "string",
+              "pattern": "^\\d+[smhd]$",
+              "default": "1h"
+            }
+          },
+          "required": [
+            "enabled",
+            "base_url_env",
+            "api_key_env",
+            "workspace_id_env",
+            "agent_id_env"
+          ],
+          "additionalProperties": false
+        },
+        "viscompile": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "bin": {
+              "type": "string",
+              "const": "lattice"
+            },
+            "schema_version": {
+              "type": "number",
+              "enum": [
+                1,
+                2
+              ],
+              "default": 2
+            },
+            "baseline": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fail_on_regression": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "enabled",
+            "bin",
+            "baseline"
+          ],
+          "additionalProperties": false
+        },
+        "lexshield": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "bin": {
+              "type": "string",
+              "const": "lexshield"
+            },
+            "pack": {
+              "type": "string",
+              "minLength": 1,
+              "default": "baseline-deny"
+            }
+          },
+          "required": [
+            "enabled",
+            "bin"
+          ],
+          "additionalProperties": false
+        },
+        "polymesh": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "gateway_url_env": {
+              "type": "string",
+              "const": "POLYMESH_GATEWAY_URL"
+            },
+            "mesh_id_env": {
+              "type": "string",
+              "const": "POLYMESH_MESH_ID"
+            },
+            "capability": {
+              "type": "string",
+              "const": "latticeag.events.relay"
+            }
+          },
+          "required": [
+            "enabled",
+            "gateway_url_env",
+            "mesh_id_env",
+            "capability"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "axion",
+        "visreplay",
+        "lexverdict",
+        "vekinbox",
+        "viscompile",
+        "lexshield",
+        "polymesh"
+      ],
+      "additionalProperties": false
+    },
+    "redaction": {
+      "type": "object",
+      "properties": {
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "include_raw_text": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "keys"
+      ],
+      "additionalProperties": false
+    },
+    "sync": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "gateway_url_env": {
+          "type": "string",
+          "const": "LEXGATEWAY_URL"
+        },
+        "token_env": {
+          "type": "string",
+          "const": "LEXGATEWAY_TOKEN"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "replicate",
+            "fanout"
+          ],
+          "default": "replicate"
+        },
+        "local_port": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535,
+          "default": 8788
+        },
+        "polymesh": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "enabled",
+        "gateway_url_env",
+        "token_env",
+        "polymesh"
+      ],
+      "additionalProperties": false
+    },
+    "doctor": {
+      "type": "object",
+      "properties": {
+        "product_repos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "stale_days": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 365,
+                "default": 30
+              }
+            },
+            "required": [
+              "slug",
+              "path"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "project",
+    "bus",
+    "ingest",
+    "adapters",
+    "redaction",
+    "sync",
+    "doctor"
+  ],
+  "additionalProperties": false
+}

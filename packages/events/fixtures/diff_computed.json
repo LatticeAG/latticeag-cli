@@ -1,0 +1,46 @@
+{
+  "$schema": "latticeag.events/1.0",
+  "schema_version": 1,
+  "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "seq": 8,
+  "ts": "2026-08-17T13:57:00.123Z",
+  "run_id": "01ARZ3NDEKTSV4RRFFQ69G5FB0",
+  "session_id": "01ARZ3NDEKTSV4RRFFQ69G5FB1",
+  "producer": {
+    "product": "viscompile",
+    "adapter": "@latticeag/adapter-viscompile",
+    "adapter_version": "0.1.0"
+  },
+  "correlation_id": "01ARZ3NDEKTSV4RRFFQ69G5FB2",
+  "redaction": {
+    "applied": true,
+    "keys": ["rawText"],
+    "pattern_hits": 0
+  },
+  "name": "diff_computed",
+  "payload": {
+    "kind": "latticeag.viscompile.diff",
+    "viscompile_schema_version": 2,
+    "beliefs_omitted": false,
+    "baseline_path": "fixtures/baseline.snapshot.json",
+    "target_path": ".latticeag/target.snapshot.json",
+    "report_path": ".latticeag/diff-report.json",
+    "summary": {
+      "unchanged": 0,
+      "added": 0,
+      "removed": 0,
+      "changed": 1,
+      "regressions": 1,
+      "improvements": 0
+    },
+    "cases": [
+      {
+        "id": "runs-on-latticeag",
+        "status": "changed",
+        "regression": true,
+        "why_codes": ["output_changed"]
+      }
+    ],
+    "lattice_exit": 0
+  }
+}

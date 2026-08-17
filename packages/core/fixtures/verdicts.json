@@ -1,0 +1,14 @@
+[
+  {
+    "tool_name": "write_file",
+    "verdict": "steer",
+    "confidence": 0.82,
+    "message": "env is staging; goal requires production"
+  },
+  {
+    "tool_name": "write_file",
+    "verdict": "pass",
+    "confidence": 0.91,
+    "message": null
+  }
+]

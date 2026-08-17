@@ -1,0 +1,1574 @@
+{
+  "$ref": "#/definitions/LatticeEvent",
+  "definitions": {
+    "LatticeEvent": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "latticeag.events/1.0"
+            },
+            "schema_version": {
+              "type": "number",
+              "const": 1
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[0-7][0-9A-HJKMNP-TV-Z]{25}$"
+            },
+            "seq": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$"
+            },
+            "run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "session_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "producer": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "enum": [
+                    "polybrain",
+                    "polygnosis",
+                    "polyflow",
+                    "polyscribe",
+                    "polymesh",
+                    "lexgateway",
+                    "lexrouter",
+                    "lexrapid",
+                    "lexshield",
+                    "lexverdict",
+                    "vektor",
+                    "vekdata",
+                    "vekinbox",
+                    "axicontext",
+                    "axion",
+                    "visboard",
+                    "viscompile",
+                    "visreplay",
+                    "forgedistill",
+                    "latticeag"
+                  ]
+                },
+                "adapter": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "adapter_version": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "product",
+                "adapter",
+                "adapter_version"
+              ],
+              "additionalProperties": false
+            },
+            "causation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "correlation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "redaction": {
+              "type": "object",
+              "properties": {
+                "applied": {
+                  "type": "boolean"
+                },
+                "keys": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "pattern_hits": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "applied",
+                "keys",
+                "pattern_hits"
+              ],
+              "additionalProperties": false
+            },
+            "name": {
+              "type": "string",
+              "const": "belief_extracted"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "belief": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "causal",
+                        "assumption",
+                        "intention",
+                        "evidence",
+                        "uncertainty",
+                        "contradiction",
+                        "planning",
+                        "self-correction"
+                      ]
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "evidence": {
+                      "type": "string"
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "action_taken": {
+                      "type": "string"
+                    },
+                    "line": {
+                      "type": "integer"
+                    },
+                    "axion_timestamp_ms": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "text",
+                    "confidence",
+                    "line",
+                    "axion_timestamp_ms"
+                  ],
+                  "additionalProperties": false
+                },
+                "batch": {
+                  "type": "object",
+                  "properties": {
+                    "spec": {
+                      "type": "string",
+                      "const": "axion.belief_batch.v1"
+                    },
+                    "calls_in_session": {
+                      "type": "integer"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "enum": [
+                        "openai",
+                        "anthropic"
+                      ]
+                    },
+                    "model_name": {
+                      "type": "string"
+                    },
+                    "inbound_message_count": {
+                      "type": "integer"
+                    },
+                    "redactions": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "spec",
+                    "calls_in_session",
+                    "redactions"
+                  ],
+                  "additionalProperties": false
+                },
+                "action": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "provider": {
+                      "type": "string",
+                      "enum": [
+                        "openai",
+                        "anthropic"
+                      ]
+                    },
+                    "source": {
+                      "type": "string",
+                      "enum": [
+                        "tool_calls",
+                        "tool_use"
+                      ]
+                    },
+                    "argument_fingerprint": {
+                      "type": "string"
+                    },
+                    "argument_fingerprint_source": {
+                      "type": "string",
+                      "enum": [
+                        "canonical",
+                        "raw"
+                      ]
+                    },
+                    "argument_bytes": {
+                      "type": "integer"
+                    },
+                    "source_class": {
+                      "type": "string",
+                      "const": "tool_observed"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "provider",
+                    "source",
+                    "argument_fingerprint",
+                    "argument_fingerprint_source",
+                    "argument_bytes",
+                    "source_class"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "belief",
+                "batch"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "policy_decision"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "request_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decision": {
+                  "type": "string",
+                  "enum": [
+                    "ALLOW",
+                    "BLOCK",
+                    "CHALLENGE",
+                    "DEFER"
+                  ]
+                },
+                "matched_rule_id": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "policy_version": {
+                  "type": "string"
+                },
+                "duration_ms": {
+                  "type": "integer"
+                },
+                "challenge_id": {
+                  "type": "string"
+                },
+                "tool": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "namespace": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                "classifications": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "intent": {
+                        "type": "string"
+                      },
+                      "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "classifier": {
+                        "type": "string"
+                      },
+                      "alternatives": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "intent": {
+                              "type": "string"
+                            },
+                            "confidence": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "intent",
+                            "confidence"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "intent",
+                      "confidence",
+                      "classifier",
+                      "alternatives"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "request_id",
+                "decision",
+                "reason",
+                "duration_ms",
+                "tool",
+                "classifications"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "verdict"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "steer"
+                  ]
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "message": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tool_call": {
+                  "type": "string",
+                  "maxLength": 8000
+                },
+                "goal": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/2/properties/payload/properties/tool_call"
+                },
+                "result": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/2/properties/payload/properties/tool_call"
+                },
+                "tool_call_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "goal_sha256": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/2/properties/payload/properties/tool_call_sha256"
+                },
+                "result_sha256": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/2/properties/payload/properties/tool_call_sha256"
+                },
+                "latency_ms": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "verdict",
+                "confidence",
+                "message",
+                "tool_call",
+                "goal",
+                "result",
+                "tool_call_sha256",
+                "goal_sha256",
+                "result_sha256",
+                "latency_ms"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "approval_granted"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "request_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string"
+                },
+                "workspace_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "agent_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "type": "string",
+                  "const": "approved"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "resolved_by": {
+                  "type": "string"
+                },
+                "resolved_at": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "normal",
+                    "high",
+                    "critical"
+                  ]
+                }
+              },
+              "required": [
+                "request_id",
+                "key",
+                "title",
+                "workspace_id",
+                "agent_id",
+                "status",
+                "action",
+                "resolved_at",
+                "priority"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "compensation_executed"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "request_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "execution_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "state_from": {
+                  "type": "string",
+                  "const": "compensation_required"
+                },
+                "state_to": {
+                  "type": "string",
+                  "enum": [
+                    "failed_verified",
+                    "invalidated",
+                    "executed"
+                  ]
+                },
+                "action": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "metadata",
+                    "fixture"
+                  ]
+                }
+              },
+              "required": [
+                "request_id",
+                "execution_id",
+                "state_from",
+                "state_to",
+                "action"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "receipt_issued"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "request_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "execution_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tier": {
+                  "type": "string",
+                  "enum": [
+                    "agent_asserted",
+                    "gateway_verified",
+                    "downstream_attested"
+                  ]
+                },
+                "action": {
+                  "type": "string"
+                },
+                "issued_at": {
+                  "type": "string"
+                },
+                "payload_sha256": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/2/properties/payload/properties/tool_call_sha256"
+                },
+                "source": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/4/properties/payload/properties/source"
+                }
+              },
+              "required": [
+                "request_id",
+                "execution_id",
+                "tier",
+                "action",
+                "issued_at",
+                "payload_sha256"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "session_recorded"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "visreplay_schema": {
+                  "type": "string",
+                  "const": "visreplay/session/1.0"
+                },
+                "visreplay_session_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "session_name": {
+                  "type": "string"
+                },
+                "agent_type": {
+                  "type": "string"
+                },
+                "started_at": {
+                  "type": "string"
+                },
+                "ended_at": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "event_count": {
+                  "type": "integer"
+                },
+                "event_counts": {
+                  "type": "object",
+                  "properties": {
+                    "input": {
+                      "type": "integer"
+                    },
+                    "reasoning": {
+                      "type": "integer"
+                    },
+                    "tool_call": {
+                      "type": "integer"
+                    },
+                    "tool_result": {
+                      "type": "integer"
+                    },
+                    "output": {
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "input",
+                    "reasoning",
+                    "tool_call",
+                    "tool_result",
+                    "output",
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "visreplay_schema",
+                "visreplay_session_id",
+                "session_name",
+                "agent_type",
+                "started_at",
+                "path",
+                "event_count",
+                "event_counts"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "diff_computed"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "latticeag.viscompile.diff"
+                },
+                "viscompile_schema_version": {
+                  "type": "number",
+                  "enum": [
+                    1,
+                    2
+                  ]
+                },
+                "beliefs_omitted": {
+                  "type": "boolean"
+                },
+                "baseline_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "report_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "summary": {
+                  "type": "object",
+                  "properties": {
+                    "unchanged": {
+                      "type": "integer"
+                    },
+                    "added": {
+                      "type": "integer"
+                    },
+                    "removed": {
+                      "type": "integer"
+                    },
+                    "changed": {
+                      "type": "integer"
+                    },
+                    "regressions": {
+                      "type": "integer"
+                    },
+                    "improvements": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "unchanged",
+                    "added",
+                    "removed",
+                    "changed",
+                    "regressions",
+                    "improvements"
+                  ],
+                  "additionalProperties": false
+                },
+                "cases": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "unchanged",
+                          "added",
+                          "removed",
+                          "changed",
+                          "improved"
+                        ]
+                      },
+                      "regression": {
+                        "type": "boolean"
+                      },
+                      "why_codes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "case_added",
+                            "case_removed",
+                            "error_raised",
+                            "error_resolved",
+                            "input_changed",
+                            "tool_call_reordered",
+                            "tool_call_removed",
+                            "tool_call_added",
+                            "tool_call_arguments_changed",
+                            "output_changed",
+                            "error_changed"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "status",
+                      "regression",
+                      "why_codes"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "lattice_exit": {
+                  "type": "number",
+                  "enum": [
+                    0,
+                    1,
+                    2
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "viscompile_schema_version",
+                "beliefs_omitted",
+                "baseline_path",
+                "target_path",
+                "report_path",
+                "summary",
+                "cases",
+                "lattice_exit"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "tool_observed"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "axion",
+                    "visreplay"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "arguments": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      {
+                        "$ref": "#/definitions/LatticeEvent/anyOf/8/properties/payload/properties/arguments"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/LatticeEvent/anyOf/8/properties/payload/properties/arguments/additionalProperties"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "result": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/8/properties/payload/properties/arguments/additionalProperties"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "argument_fingerprint": {
+                  "type": "string"
+                },
+                "visreplay_event_id": {
+                  "type": "string"
+                },
+                "axion_action_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "source",
+                "name",
+                "arguments"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "extension"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "extension_name": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+                },
+                "payload": {
+                  "$ref": "#/definitions/LatticeEvent/anyOf/8/properties/payload/properties/arguments/additionalProperties"
+                }
+              },
+              "required": [
+                "extension_name",
+                "payload"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "bus_overflow"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "capacity",
+                    "rotate",
+                    "sync_outbox"
+                  ]
+                },
+                "dropped_id": {
+                  "type": "string"
+                },
+                "dropped_name": {
+                  "type": "string"
+                },
+                "ring_size": {
+                  "type": "integer"
+                },
+                "ring_capacity": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "reason",
+                "ring_size",
+                "ring_capacity"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/$schema"
+            },
+            "schema_version": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/schema_version"
+            },
+            "id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/id"
+            },
+            "seq": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/seq"
+            },
+            "ts": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/ts"
+            },
+            "run_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/run_id"
+            },
+            "session_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/session_id"
+            },
+            "producer": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/producer"
+            },
+            "causation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/causation_id"
+            },
+            "correlation_id": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/correlation_id"
+            },
+            "redaction": {
+              "$ref": "#/definitions/LatticeEvent/anyOf/0/properties/redaction"
+            },
+            "name": {
+              "type": "string",
+              "const": "adapter_error"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "adapter": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "message": {
+                  "type": "string"
+                },
+                "cause_name": {
+                  "type": "string"
+                },
+                "event_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "adapter",
+                "message"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "schema_version",
+            "id",
+            "seq",
+            "ts",
+            "run_id",
+            "session_id",
+            "producer",
+            "correlation_id",
+            "redaction",
+            "name",
+            "payload"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

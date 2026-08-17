@@ -1,0 +1,26 @@
+{
+  "kind": "latticeag.viscompile.transcript",
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "runs-on-latticeag",
+      "input": {
+        "prompt": "Write production config.yaml with env: production and replicas: 3"
+      },
+      "events": [
+        {
+          "type": "tool_call",
+          "name": "write_file",
+          "arguments": {
+            "path": "out/config.yaml",
+            "contents": "env: production\nreplicas: 3\n"
+          }
+        },
+        {
+          "type": "final",
+          "output": {}
+        }
+      ]
+    }
+  ]
+}

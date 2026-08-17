@@ -1,0 +1,61 @@
+--- a/schemas/transcript.schema.json
++++ b/schemas/transcript.schema.json
+@@ -11,8 +11,8 @@
+       "const": "latticeag.viscompile.transcript"
+     },
+     "schema_version": {
+-      "const": 1
++      "type": "integer",
++      "enum": [1, 2]
+     },
+     "cases": {
+       "type": "array",
+@@ -45,6 +45,9 @@
+       "oneOf": [
+         {
+           "$ref": "#/$defs/tool_call"
+         },
+         {
+           "$ref": "#/$defs/final"
+         },
+         {
+           "$ref": "#/$defs/error"
++        },
++        {
++          "$ref": "#/$defs/belief"
+         }
+       ]
+     },
+@@ -93,5 +96,40 @@
+         "message": {
+           "type": "string",
+           "minLength": 1
+         }
+       }
++    },
++    "belief": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": ["type", "belief_type", "text", "confidence", "id"],
++      "properties": {
++        "type": { "const": "belief" },
++        "belief_type": {
++          "enum": [
++            "causal",
++            "assumption",
++            "intention",
++            "evidence",
++            "uncertainty",
++            "contradiction",
++            "planning",
++            "self-correction"
++          ]
++        },
++        "text": { "type": "string", "minLength": 1 },
++        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
++        "id": { "type": "string", "minLength": 1 },
++        "evidence": { "type": "string" }
++      }
+     }
+   }
+ }

@@ -1,0 +1,17 @@
+Usage: latticeag doctor [options]
+
+Check the local latticeag setup.
+
+Options:
+  --offline        Skip git fetch and HTTP health
+  --fix            Create .latticeag/, pick ingest port, write missing
+                   .env.example
+  --config <path>  Path to latticeag.json; sets LATTICEAG_CONFIG for this
+                   process
+  --cwd <dir>      Change working directory before config discovery
+  --json           Machine JSON on stdout, diagnostics on stderr
+  --quiet          No stderr except errors
+  --verbose        Extra stderr progress
+  --no-color       Disable ANSI color; also honors NO_COLOR
+  -V, --version    Print CLI semver and exit
+  -h, --help       display help for command

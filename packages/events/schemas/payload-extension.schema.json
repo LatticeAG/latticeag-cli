@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/Payload_extension",
+  "definitions": {
+    "Payload_extension": {
+      "type": "object",
+      "properties": {
+        "extension_name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+        },
+        "payload": {
+          "anyOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/Payload_extension/properties/payload"
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Payload_extension/properties/payload"
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "extension_name",
+        "payload"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,10 @@
+{
+  "required_subsequence": [
+    "belief_extracted",
+    "tool_observed",
+    "verdict",
+    "approval_granted",
+    "receipt_issued",
+    "session_recorded"
+  ]
+}

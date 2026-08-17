@@ -1,0 +1,29 @@
+Usage: latticeag dev [options]
+
+Run with a live event TUI.
+
+Options:
+  --follow-types <list>       TUI filter, comma list of first-class event names
+  --cmd <string>              Command to spawn
+  --attach <kit>              Attach kit id (choices: "openai-completions",
+                              "openai-agents", "hermes", "langgraph", "custom",
+                              default: "openai-completions")
+  --adapters <list>           Temporary overlay, cannot enable an adapter not
+                              in config
+  --env-file <path>           Loaded via dotenv without overriding existing env
+  --timeout-ms <n>            0 means no timeout. Else SIGTERM at n, SIGKILL at
+                              n+5000 (default: "0")
+  --run-id <ulid>             Reuse a run id for resume of the JSONL only
+  --session-id <id>           Sets x-axion-session and LATTICEAG_SESSION_ID
+  --fixture-beliefs <path>    Axion adapter reads fixtures instead of webhook
+  --fixture-approvals <path>  VekInbox adapter reads fixtures
+  --fail-on-sync              Exit 5 if sync outbox remains non-empty
+  --config <path>             Path to latticeag.json; sets LATTICEAG_CONFIG for
+                              this process
+  --cwd <dir>                 Change working directory before config discovery
+  --json                      Machine JSON on stdout, diagnostics on stderr
+  --quiet                     No stderr except errors
+  --verbose                   Extra stderr progress
+  --no-color                  Disable ANSI color; also honors NO_COLOR
+  -V, --version               Print CLI semver and exit
+  -h, --help                  display help for command

@@ -1,0 +1,140 @@
+{
+  "$ref": "#/definitions/Payload_diff_computed",
+  "definitions": {
+    "Payload_diff_computed": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "latticeag.viscompile.diff"
+        },
+        "viscompile_schema_version": {
+          "type": "number",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "beliefs_omitted": {
+          "type": "boolean"
+        },
+        "baseline_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "unchanged": {
+              "type": "integer"
+            },
+            "added": {
+              "type": "integer"
+            },
+            "removed": {
+              "type": "integer"
+            },
+            "changed": {
+              "type": "integer"
+            },
+            "regressions": {
+              "type": "integer"
+            },
+            "improvements": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "unchanged",
+            "added",
+            "removed",
+            "changed",
+            "regressions",
+            "improvements"
+          ],
+          "additionalProperties": false
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "unchanged",
+                  "added",
+                  "removed",
+                  "changed",
+                  "improved"
+                ]
+              },
+              "regression": {
+                "type": "boolean"
+              },
+              "why_codes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "case_added",
+                    "case_removed",
+                    "error_raised",
+                    "error_resolved",
+                    "input_changed",
+                    "tool_call_reordered",
+                    "tool_call_removed",
+                    "tool_call_added",
+                    "tool_call_arguments_changed",
+                    "output_changed",
+                    "error_changed"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "status",
+              "regression",
+              "why_codes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "lattice_exit": {
+          "type": "number",
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "viscompile_schema_version",
+        "beliefs_omitted",
+        "baseline_path",
+        "target_path",
+        "report_path",
+        "summary",
+        "cases",
+        "lattice_exit"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

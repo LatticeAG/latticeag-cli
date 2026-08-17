@@ -1,0 +1,35 @@
+{
+  "kind": "latticeag.viscompile.transcript",
+  "schema_version": 2,
+  "cases": [
+    {
+      "id": "runs-on-latticeag",
+      "input": {
+        "prompt": "Write production config.yaml with env: production and replicas: 3"
+      },
+      "events": [
+        {
+          "type": "belief",
+          "belief_type": "assumption",
+          "text": "staging shares prod credentials",
+          "confidence": 0.5,
+          "id": "belief-assumption-1"
+        },
+        {
+          "type": "tool_call",
+          "name": "write_file",
+          "arguments": {
+            "path": "out/config.yaml",
+            "contents": "env: staging\nreplicas: 3\n"
+          }
+        },
+        {
+          "type": "final",
+          "output": {
+            "ok": true
+          }
+        }
+      ]
+    }
+  ]
+}

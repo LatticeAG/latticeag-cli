@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/Payload_bus_overflow",
+  "definitions": {
+    "Payload_bus_overflow": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "enum": [
+            "capacity",
+            "rotate",
+            "sync_outbox"
+          ]
+        },
+        "dropped_id": {
+          "type": "string"
+        },
+        "dropped_name": {
+          "type": "string"
+        },
+        "ring_size": {
+          "type": "integer"
+        },
+        "ring_capacity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "reason",
+        "ring_size",
+        "ring_capacity"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

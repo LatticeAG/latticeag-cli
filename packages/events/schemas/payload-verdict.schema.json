@@ -1,0 +1,65 @@
+{
+  "$ref": "#/definitions/Payload_verdict",
+  "definitions": {
+    "Payload_verdict": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "steer"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_call": {
+          "type": "string",
+          "maxLength": 8000
+        },
+        "goal": {
+          "$ref": "#/definitions/Payload_verdict/properties/tool_call"
+        },
+        "result": {
+          "$ref": "#/definitions/Payload_verdict/properties/tool_call"
+        },
+        "tool_call_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "goal_sha256": {
+          "$ref": "#/definitions/Payload_verdict/properties/tool_call_sha256"
+        },
+        "result_sha256": {
+          "$ref": "#/definitions/Payload_verdict/properties/tool_call_sha256"
+        },
+        "latency_ms": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "verdict",
+        "confidence",
+        "message",
+        "tool_call",
+        "goal",
+        "result",
+        "tool_call_sha256",
+        "goal_sha256",
+        "result_sha256",
+        "latency_ms"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

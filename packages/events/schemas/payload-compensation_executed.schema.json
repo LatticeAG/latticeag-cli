@@ -1,0 +1,52 @@
+{
+  "$ref": "#/definitions/Payload_compensation_executed",
+  "definitions": {
+    "Payload_compensation_executed": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state_from": {
+          "type": "string",
+          "const": "compensation_required"
+        },
+        "state_to": {
+          "type": "string",
+          "enum": [
+            "failed_verified",
+            "invalidated",
+            "executed"
+          ]
+        },
+        "action": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "metadata",
+            "fixture"
+          ]
+        }
+      },
+      "required": [
+        "request_id",
+        "execution_id",
+        "state_from",
+        "state_to",
+        "action"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "latticeag.events/1.0",
+  "schema_version": 1,
+  "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "seq": 5,
+  "ts": "2026-08-17T13:57:00.123Z",
+  "run_id": "01ARZ3NDEKTSV4RRFFQ69G5FB0",
+  "session_id": "01ARZ3NDEKTSV4RRFFQ69G5FB1",
+  "producer": {
+    "product": "vekinbox",
+    "adapter": "@latticeag/adapter-vekinbox",
+    "adapter_version": "0.1.0"
+  },
+  "correlation_id": "01ARZ3NDEKTSV4RRFFQ69G5FB2",
+  "redaction": {
+    "applied": true,
+    "keys": ["rawText"],
+    "pattern_hits": 0
+  },
+  "name": "compensation_executed",
+  "payload": {
+    "request_id": "req-approval-1",
+    "execution_id": "exec-1",
+    "state_from": "compensation_required",
+    "state_to": "executed",
+    "action": "revert_write_file",
+    "source": "fixture"
+  }
+}

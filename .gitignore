@@ -1,0 +1,45 @@
+# Runtime deps
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.venv/
+.pytest_cache/
+archive/
+
+# Env and secrets - env-only credentials, never committed
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Internal docs - IP protection (broad wildcards, never narrow)
+*SPEC*.md
+*SEED*.md
+*ROADMAP*.md
+*REVIEW*.md
+*prompt*.md
+*WHAT-NEXT*.md
+*PLAN*.md
+
+# latticeag local state
+.latticeag/events.jsonl
+.latticeag/events.jsonl.*
+.latticeag/sessions/
+.latticeag/sync-outbox.jsonl
+.latticeag/child-stdout.log
+.latticeag/child-stderr.log
+.latticeag/bus.pid
+.latticeag/viscompile-cap.json
+.latticeag/transcript.v1.json
+.latticeag/transcript.v2.json
+.latticeag/target.json
+.latticeag/diff-report.json
+
+# Logs and local state
+*.log
+.DS_Store
+out/
+tmp/

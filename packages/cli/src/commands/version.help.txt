@@ -1,0 +1,14 @@
+Usage: latticeag version [options]
+
+Print latticeag and workspace package versions.
+
+Options:
+  --config <path>  Path to latticeag.json; sets LATTICEAG_CONFIG for this
+                   process
+  --cwd <dir>      Change working directory before config discovery
+  --json           Machine JSON on stdout, diagnostics on stderr
+  --quiet          No stderr except errors
+  --verbose        Extra stderr progress
+  --no-color       Disable ANSI color; also honors NO_COLOR
+  -V, --version    Print CLI semver and exit
+  -h, --help       display help for command

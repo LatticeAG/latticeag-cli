@@ -1,0 +1,39 @@
+{
+  "$schema": "latticeag.events/1.0",
+  "schema_version": 1,
+  "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  "seq": 7,
+  "ts": "2026-08-17T13:57:00.123Z",
+  "run_id": "01ARZ3NDEKTSV4RRFFQ69G5FB0",
+  "session_id": "01ARZ3NDEKTSV4RRFFQ69G5FB1",
+  "producer": {
+    "product": "visreplay",
+    "adapter": "@latticeag/adapter-visreplay",
+    "adapter_version": "0.1.0"
+  },
+  "correlation_id": "01ARZ3NDEKTSV4RRFFQ69G5FB2",
+  "redaction": {
+    "applied": true,
+    "keys": ["rawText"],
+    "pattern_hits": 0
+  },
+  "name": "session_recorded",
+  "payload": {
+    "visreplay_schema": "visreplay/session/1.0",
+    "visreplay_session_id": "vrs-1",
+    "session_name": "01ARZ3NDEKTSV4RRFFQ69G5FB0",
+    "agent_type": "custom",
+    "started_at": "2026-08-17T13:57:00.123Z",
+    "ended_at": "2026-08-17T13:57:01.123Z",
+    "path": ".latticeag/sessions/01ARZ3NDEKTSV4RRFFQ69G5FB0.vrs",
+    "event_count": 4,
+    "event_counts": {
+      "input": 1,
+      "reasoning": 0,
+      "tool_call": 2,
+      "tool_result": 0,
+      "output": 1,
+      "error": 0
+    }
+  }
+}

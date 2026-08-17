@@ -1,0 +1,67 @@
+{
+  "$ref": "#/definitions/Payload_tool_observed",
+  "definitions": {
+    "Payload_tool_observed": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "axion",
+            "visreplay"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "null"
+                ]
+              },
+              {
+                "$ref": "#/definitions/Payload_tool_observed/properties/arguments"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Payload_tool_observed/properties/arguments/additionalProperties"
+                }
+              }
+            ]
+          }
+        },
+        "result": {
+          "$ref": "#/definitions/Payload_tool_observed/properties/arguments/additionalProperties"
+        },
+        "error": {
+          "type": "string"
+        },
+        "argument_fingerprint": {
+          "type": "string"
+        },
+        "visreplay_event_id": {
+          "type": "string"
+        },
+        "axion_action_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "name",
+        "arguments"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

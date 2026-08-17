@@ -1,0 +1,45 @@
+{
+  "name": "@latticeag/core",
+  "version": "0.1.0",
+  "description": "In-process LatticeAG SDK. Event replication is latticeag sync, not @latticeag/core.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./attach/langgraph": {
+      "types": "./dist/attach/langgraph.d.ts",
+      "import": "./dist/attach/langgraph.js"
+    },
+    "./attach/langgraph_callback.py": "./src/attach/langgraph_callback.py"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "check": "tsc --noEmit && vitest run"
+  },
+  "dependencies": {
+    "@latticeag/bus": "workspace:*",
+    "@latticeag/adapter-axion": "workspace:*",
+    "@latticeag/adapter-lexverdict": "workspace:*",
+    "@latticeag/adapter-vekinbox": "workspace:*",
+    "@latticeag/adapter-visreplay": "workspace:*",
+    "@latticeag/config": "workspace:*",
+    "@latticeag/events": "workspace:*",
+    "ulid": "^2.3.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "typescript": "~5.8.3",
+    "vitest": "^3.0.9"
+  }
+}

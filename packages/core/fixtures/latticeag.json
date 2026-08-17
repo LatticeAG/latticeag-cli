@@ -1,0 +1,92 @@
+{
+  "$schema": "https://latticeag.dev/schemas/latticeag-config/v1.json",
+  "schema_version": 1,
+  "project": {
+    "name": "latticeag-core-fixtures",
+    "run_id_prefix": "run"
+  },
+  "bus": {
+    "log_path": ".latticeag/events.jsonl",
+    "ring_capacity": 10000,
+    "overflow_block_ms": 5000,
+    "overflow": "block_then_drop",
+    "max_log_bytes": 268435456,
+    "persist_fail": "throw"
+  },
+  "ingest": {
+    "bind": "127.0.0.1",
+    "port": 9847,
+    "path": "/v1/ingest"
+  },
+  "adapters": {
+    "axion": {
+      "enabled": true,
+      "mode": "webhook",
+      "base_url": "http://127.0.0.1:8787",
+      "webhook_path": "/v1/ingest/axion",
+      "poll_interval_ms": 1000
+    },
+    "visreplay": {
+      "enabled": true,
+      "session_dir": ".latticeag/sessions",
+      "agent_type": "custom"
+    },
+    "lexverdict": {
+      "enabled": true,
+      "base_url_env": "LEXVERDICT_URL",
+      "timeout_ms": 15000
+    },
+    "vekinbox": {
+      "enabled": true,
+      "base_url_env": "VEKINBOX_URL",
+      "api_key_env": "VEKINBOX_API_KEY",
+      "workspace_id_env": "VEKINBOX_WORKSPACE_ID",
+      "agent_id_env": "VEKINBOX_AGENT_ID",
+      "timeout": "1h"
+    },
+    "viscompile": {
+      "enabled": false,
+      "bin": "lattice",
+      "schema_version": 2,
+      "baseline": "fixtures/baseline.snapshot.json",
+      "fail_on_regression": false
+    },
+    "lexshield": {
+      "enabled": false,
+      "bin": "lexshield",
+      "pack": "baseline-deny"
+    },
+    "polymesh": {
+      "enabled": false,
+      "gateway_url_env": "POLYMESH_GATEWAY_URL",
+      "mesh_id_env": "POLYMESH_MESH_ID",
+      "capability": "latticeag.events.relay"
+    }
+  },
+  "redaction": {
+    "keys": [
+      "authorization",
+      "Authorization",
+      "apiKey",
+      "api_key",
+      "token",
+      "secret",
+      "password",
+      "rawText"
+    ],
+    "include_raw_text": false
+  },
+  "sync": {
+    "enabled": false,
+    "gateway_url_env": "LEXGATEWAY_URL",
+    "token_env": "LEXGATEWAY_TOKEN",
+    "mode": "replicate",
+    "local_port": 8788,
+    "polymesh": {
+      "enabled": false
+    }
+  },
+  "doctor": {
+    "product_repos": []
+  }
+}

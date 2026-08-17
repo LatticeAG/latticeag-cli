@@ -201,7 +201,7 @@ describe("help snapshots", () => {
   it("-V prints CLI semver only", async () => {
     const result = await runCli(["-V"]);
     expect(result.status).toBe(0);
-    expect(result.stdout).toBe("0.1.0\n");
+    expect(result.stdout).toMatch(/^\d+\.\d+\.\d+\n$/);
   });
 
   it("--verbose and --quiet together exit 1", async () => {

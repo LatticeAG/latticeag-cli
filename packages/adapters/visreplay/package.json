@@ -1,6 +1,6 @@
 {
   "name": "@latticeag/adapter-visreplay",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "VisReplay session recording adapter for latticeag.",
   "type": "module",
   "private": false,

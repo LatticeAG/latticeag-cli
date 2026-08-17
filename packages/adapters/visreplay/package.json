@@ -28,7 +28,7 @@
     "@latticeag/bus": "workspace:*",
     "@latticeag/config": "workspace:*",
     "@latticeag/events": "workspace:*",
-    "@latticeag/visreplay": "file:/home/ubuntu/repos/visreplay"
+    "@latticeag/visreplay": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "^20.17.19",

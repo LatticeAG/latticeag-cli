@@ -26,7 +26,7 @@
     "@latticeag/config": "workspace:*",
     "@latticeag/events": "workspace:*",
     "@latticeag/events-tui": "workspace:*",
-    "@latticeag/visreplay": "file:/home/ubuntu/repos/visreplay",
+    "@latticeag/visreplay": "^1.1.1",
     "commander": "^12.1.0",
     "dotenv": "^16.4.7",
     "execa": "^9.5.2",

@@ -161,8 +161,8 @@ importers:
         specifier: workspace:*
         version: link:../../events
       '@latticeag/visreplay':
-        specifier: file:/home/ubuntu/repos/visreplay
-        version: file:../repos/visreplay
+        specifier: ^1.1.1
+        version: 1.1.1
     devDependencies:
       '@types/node':
         specifier: ^20.17.19
@@ -232,8 +232,8 @@ importers:
         specifier: workspace:*
         version: link:../tui
       '@latticeag/visreplay':
-        specifier: file:/home/ubuntu/repos/visreplay
-        version: file:../repos/visreplay
+        specifier: ^1.1.1
+        version: 1.1.1
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -537,8 +537,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@latticeag/visreplay@file:../repos/visreplay':
-    resolution: {directory: ../repos/visreplay, type: directory}
+  '@latticeag/visreplay@1.1.1':
+    resolution: {integrity: sha512-hrUim3J5Bqapz46NHAHYbwTAUVMn+tSLztiixbyfd6d6unMQkY2uOUp+MGu0xKSY6Wvya7JWxtlJutRgRFCQ5A==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -1495,7 +1495,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  '@latticeag/visreplay@file:../repos/visreplay':
+  '@latticeag/visreplay@1.1.1':
     dependencies:
       commander: 11.1.0
 

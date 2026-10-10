@@ -3,7 +3,7 @@ import { execFile, execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { promisify } from "node:util";
-import OpenAI from "openai";
+import type OpenAI from "openai";
 
 const execFileAsync = promisify(execFile);
 
@@ -243,7 +243,10 @@ async function runOffline(): Promise<void> {
 }
 
 async function runLive(): Promise<void> {
-  const client = new OpenAI({
+  // Lazy-import so `--offline-fixture` runs need no installed deps (a
+  // scaffolded `init --template demo` project has no node_modules).
+  const { default: OpenAIClient } = await import("openai");
+  const client = new OpenAIClient({
     defaultHeaders: {
       "x-axion-session": process.env.LATTICEAG_SESSION_ID ?? "",
     },

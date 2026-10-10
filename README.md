@@ -57,34 +57,58 @@ Built by [LatticeAG](https://github.com/LatticeAG).
 
 ## Quick Start
 
+Two caveats up front: **14 of the 19 catalog products run `@latticeag/adapter-stub`** until their live adapters land, and **the hosted LexGateway relay is invite-only** — everything in this quick start runs locally with no keys.
+
 ```bash
-# 1. Install prerequisites: Node >= 20.19, pnpm 9.15.0
+# 1. Prerequisites: Node >= 20.19, pnpm 9.15.0
 node --version   # >= 20.19
 pnpm --version   # 9.15.0
 
-# 2. Install and build
+# 2. Install and build — in that order. The `latticeag` bin is a thin
+#    checked-in launcher (packages/cli/bin/latticeag.js) that delegates to
+#    dist/cli.js: `pnpm install` links it on the first pass, and it runs
+#    once `pnpm build` has produced dist (no re-install needed).
 git clone https://github.com/LatticeAG/latticeag-cli.git
 cd latticeag-cli
 pnpm install
 pnpm build
 
-# 3. Scaffold a project and check setup
-latticeag init
-latticeag doctor
-
-# 4. Attach to an agent and run it
-latticeag run --attach openai-completions --cmd "npx tsx src/agent.ts"
-
-# Or install the CLI globally
+# 3. Install the bin globally — or skip this and substitute
+#    `node packages/cli/bin/latticeag.js` (run from the repo root) for
+#    `latticeag` below; `pnpm exec latticeag` also works inside any
+#    workspace package that depends on @latticeag/cli (e.g. examples/*).
 pnpm add -g @latticeag/cli
+
+# 4. Scaffold a project and check setup
+latticeag init ./my-project   # writes latticeag.json, .env.example, src/agent.ts stub
+cd my-project
+cp .env.example .env          # stub keys for live products — see below
+latticeag doctor              # rows: node, config, events, adapters, env_*, health
+latticeag products            # 19 products, adapter status per row (wired/available/stub)
 ```
 
-Verify with the offline reference demo (no API keys needed):
+Init quirks the smoke test surfaced: `init` enables the `axion`, `visreplay`, `lexverdict`, and `vekinbox` adapters, so `doctor` reports `fail env_*` rows until the matching `.env` keys are set (`AXION_*`, `LEXVERDICT_URL`, `VEKINBOX_*`) — those are only needed for live products, not the offline path below. Re-running `init` where `latticeag.json` already exists requires `--force`. `init --template demo` copies the `runs-on-latticeag` example (needs the repo checkout, not a global install); the scaffolded project runs the offline fixture with no `npm install` — its `@latticeag/cli` dep is dropped since the bin comes from PATH — and only needs `pnpm install` for live mode (`openai`) or the vitest suite.
+
+Verify with the offline reference demo (no API keys, no adapter env vars):
 
 ```bash
-latticeag products          # 19 products, adapter status per row
-latticeag doctor            # node, config, events package, adapters, env
+cd examples/runs-on-latticeag
+LATTICEAG_GOAL="Write production config.yaml with env: production and replicas: 3" \
+VEKINBOX_AUTO_APPROVE=1 \
+pnpm exec latticeag run \
+  --fixture-beliefs fixtures/beliefs.json \
+  --fixture-approvals fixtures/approvals.json \
+  --attach custom \
+  --cmd "npx tsx src/agent.ts --offline-fixture"
+
+npx tsx src/assert-chain.ts .latticeag/events.jsonl
+# order ok: belief=1 < verdict=3 < approval=4 < receipt=5
+pnpm exec latticeag events --type verdict   # inspect the JSONL log
 ```
+
+`--fixture-beliefs` / `--fixture-approvals` (or the `LATTICEAG_FIXTURE_*` env vars) mark an offline run: Axion emits beliefs from the fixture file, VekInbox loads fixture approvals/receipts, and LexVerdict skips the `LEXVERDICT_URL` requirement. A live `run` still hard-fails (exit 4) when a required adapter env var is absent — a silent no-verify run would be a false pass.
+
+The `.env.example` stub keys and what they gate: `OPENAI_API_KEY`/`ANTHROPIC_API_KEY` (live attach kits), `AXION_*` (live Axion webhook), `LEXVERDICT_URL` (live verify endpoint), `VEKINBOX_*` + `VEKINBOX_AUTO_APPROVE` (live approvals API / fixture auto-approve), `LEXGATEWAY_*` (invite-only relay sync), `LATTICEAG_GOAL` (the goal LexVerdict verifies against).
 
 ## How It Works
 
@@ -174,6 +198,20 @@ pnpm test        # pnpm -r test (vitest across all packages + offline example)
 pnpm typecheck   # pnpm -r exec tsc --noEmit
 pnpm --filter @latticeag/events codegen
 ```
+
+The `@latticeag/events` codegen — including the codegen drift test and the
+python `models.py` artifacts — needs a repo-root Python venv with
+`datamodel-code-generator`, `pydantic`, `pytest`, and `hatchling` (the same
+venv CI creates):
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install 'datamodel-code-generator>=0.26' 'pydantic>=2.10,<3' pytest hatchling
+```
+
+Without it the codegen drift test is skipped rather than failing; the
+`codegen` command itself still requires the venv. The remaining test files
+run with Node alone.
 
 Test suite (verified): **177 passed, 0 failed across 42 test files and 13 packages** — including the offline end-to-end `runs-on-latticeag` fixture (`belief → verdict → approval → receipt` chain order asserted).
 

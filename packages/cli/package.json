@@ -6,7 +6,7 @@
   "private": false,
   "license": "MIT",
   "bin": {
-    "latticeag": "dist/cli.js"
+    "latticeag": "bin/latticeag.js"
   },
   "engines": {
     "node": ">=20.19"

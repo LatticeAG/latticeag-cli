@@ -108,6 +108,22 @@ function copyDemoTemplate(dest: string): string | undefined {
       return !rel.split(path.sep).includes("node_modules");
     },
   });
+  // The workspace copy depends on `@latticeag/cli` via `workspace:*`, which
+  // cannot install outside the monorepo. Scaffolded projects get the bin
+  // from PATH/global install instead, so drop that dep and rename the
+  // package after the target dir.
+  const pkgPath = path.join(dest, "package.json");
+  if (existsSync(pkgPath)) {
+    const pkg = JSON.parse(readFileSync(pkgPath, "utf8")) as {
+      name?: string;
+      dependencies?: Record<string, string>;
+    };
+    pkg.name = path.basename(dest);
+    if (pkg.dependencies) {
+      delete pkg.dependencies["@latticeag/cli"];
+    }
+    writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
+  }
   return undefined;
 }
 

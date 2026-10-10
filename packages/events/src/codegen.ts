@@ -176,8 +176,20 @@ def parse_envelope(data: dict) -> Any:
 `;
 }
 
+/**
+ * The repo-root venv binary the python codegen needs. The drift test skips
+ * when it is absent; `pnpm codegen` still requires it (see README's
+ * Verification section for the venv setup).
+ */
+export const DATAMODEL_CODEGEN_BIN = path.join(
+  repoRoot,
+  ".venv",
+  "bin",
+  "datamodel-codegen",
+);
+
 function runDatamodelCodegen(envelopeSchemaJson: string): string {
-  const bin = path.join(repoRoot, ".venv", "bin", "datamodel-codegen");
+  const bin = DATAMODEL_CODEGEN_BIN;
   if (!existsSync(bin)) {
     throw new Error(
       `datamodel-codegen not found at ${bin}. Create the venv: python3 -m venv ${path.join(repoRoot, ".venv")} && ${path.join(repoRoot, ".venv", "bin", "pip")} install 'datamodel-code-generator>=0.26' 'pydantic>=2.10,<3' pytest hatchling`,

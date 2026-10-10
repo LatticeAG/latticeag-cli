@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import {
+  DATAMODEL_CODEGEN_BIN,
   GENERATED_PATHS,
   checkArtifacts,
   computeSourceHash,
@@ -10,37 +11,46 @@ import {
   pkgRoot,
 } from "./codegen.js";
 
+// The artifact map includes python/latticeag_events/models.py, produced by
+// datamodel-codegen in the repo-root .venv. Without the venv the drift
+// check cannot run — skip instead of failing (CI builds the venv and runs
+// the same check via `pnpm --filter @latticeag/events codegen --check`).
+const hasCodegen = existsSync(DATAMODEL_CODEGEN_BIN);
+
 describe("codegen", () => {
-  test("hashes types.ts+zod.ts against schemas/ and python/", () => {
-    const sourceHash = computeSourceHash();
-    expect(sourceHash).toMatch(/^[0-9a-f]{64}$/);
+  test.skipIf(!hasCodegen)(
+    "hashes types.ts+zod.ts against schemas/ and python/",
+    () => {
+      const sourceHash = computeSourceHash();
+      expect(sourceHash).toMatch(/^[0-9a-f]{64}$/);
 
-    const artifacts = generateArtifactMap();
-    const drift = checkArtifacts(artifacts);
-    expect(drift).toEqual([]);
+      const artifacts = generateArtifactMap();
+      const drift = checkArtifacts(artifacts);
+      expect(drift).toEqual([]);
 
-    const lockPath = join(pkgRoot, "schemas/codegen-lock.json");
-    expect(existsSync(lockPath)).toBe(true);
-    const lock = JSON.parse(readFileSync(lockPath, "utf8")) as {
-      source: string;
-      artifacts: string;
-    };
-    expect(lock.source).toBe(sourceHash);
+      const lockPath = join(pkgRoot, "schemas/codegen-lock.json");
+      expect(existsSync(lockPath)).toBe(true);
+      const lock = JSON.parse(readFileSync(lockPath, "utf8")) as {
+        source: string;
+        artifacts: string;
+      };
+      expect(lock.source).toBe(sourceHash);
 
-    const h = createHash("sha256");
-    for (const rel of Object.keys(artifacts).sort()) {
-      if (rel === "schemas/codegen-lock.json") {
-        continue;
+      const h = createHash("sha256");
+      for (const rel of Object.keys(artifacts).sort()) {
+        if (rel === "schemas/codegen-lock.json") {
+          continue;
+        }
+        h.update(rel);
+        h.update("\0");
+        h.update(readFileSync(join(pkgRoot, rel)));
+        h.update("\0");
       }
-      h.update(rel);
-      h.update("\0");
-      h.update(readFileSync(join(pkgRoot, rel)));
-      h.update("\0");
-    }
-    expect(lock.artifacts).toBe(h.digest("hex"));
+      expect(lock.artifacts).toBe(h.digest("hex"));
 
-    for (const rel of GENERATED_PATHS) {
-      expect(existsSync(join(pkgRoot, rel)), rel).toBe(true);
-    }
-  });
+      for (const rel of GENERATED_PATHS) {
+        expect(existsSync(join(pkgRoot, rel)), rel).toBe(true);
+      }
+    },
+  );
 });

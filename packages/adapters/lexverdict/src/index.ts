@@ -29,6 +29,26 @@ function fieldTooLong(...fields: string[]): boolean {
   return fields.some((f) => f.length > MAX_VERIFICATION_FIELD_CHARS);
 }
 
+/**
+ * Env vars that mark an offline fixture run. When any is set, the adapter
+ * tolerates a missing LEXVERDICT_URL: verdicts arrive via fixtures/ingest
+ * rather than a live verify endpoint, so there is nothing to subscribe to.
+ * Without a fixture the requirement stands — a silent no-verify run is a
+ * false pass.
+ */
+const FIXTURE_ENV_KEYS = [
+  "LATTICEAG_FIXTURE_BELIEFS",
+  "LATTICEAG_FIXTURE_APPROVALS",
+  "LATTICEAG_FIXTURE_VERDICTS",
+] as const;
+
+function fixtureRun(env: NodeJS.ProcessEnv): boolean {
+  return FIXTURE_ENV_KEYS.some((key) => {
+    const value = env[key] ?? process.env[key];
+    return typeof value === "string" && value.trim().length > 0;
+  });
+}
+
 export function createAdapter(): Adapter {
   let ctx: AdapterContext | undefined;
   let unsubscribe: (() => void) | undefined;
@@ -128,15 +148,22 @@ export function createAdapter(): Adapter {
     product: "lexverdict",
     async start(startCtx: AdapterContext): Promise<void> {
       const url = startCtx.env.LEXVERDICT_URL;
-      if (!url || url.trim().length === 0) {
+      const hasUrl = typeof url === "string" && url.trim().length > 0;
+      if (!hasUrl && !fixtureRun(startCtx.env)) {
         throw new Error("LEXVERDICT_URL unset");
       }
       ctx = startCtx;
       seen.clear();
-      unsubscribe = startCtx.bus.subscribe("tool_observed", (event) => {
-        void onToolObserved(event);
-      });
-      lastHealth = { id: ADAPTER_ID, ok: true, detail: url };
+      if (hasUrl) {
+        unsubscribe = startCtx.bus.subscribe("tool_observed", (event) => {
+          void onToolObserved(event);
+        });
+      }
+      lastHealth = {
+        id: ADAPTER_ID,
+        ok: true,
+        detail: hasUrl ? (url as string) : "fixture run (LEXVERDICT_URL unset)",
+      };
     },
     async health(): Promise<AdapterHealth> {
       if (!ctx) {

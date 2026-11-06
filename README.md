@@ -168,6 +168,14 @@ warn  env_OPENAI_API_KEY  absent        # only needed for live kits
 
 ## Verification
 
+The codegen drift test is skipped when `.venv/bin/datamodel-codegen` is absent.
+To run it locally, create the same environment used by CI:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install 'datamodel-code-generator>=0.26' 'pydantic>=2.10,<3' pytest hatchling
+```
+
 ```bash
 pnpm build       # pnpm -r build
 pnpm test        # pnpm -r test (vitest across all packages + offline example)

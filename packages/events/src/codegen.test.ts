@@ -11,7 +11,11 @@ import {
 } from "./codegen.js";
 
 describe("codegen", () => {
-  test("hashes types.ts+zod.ts against schemas/ and python/", () => {
+  const codegenBin = join(pkgRoot, "../../.venv/bin/datamodel-codegen");
+  if (!existsSync(codegenBin)) {
+    console.warn("Skipping codegen drift test: install datamodel-codegen in .venv (see README Verification).");
+  }
+  test.skipIf(!existsSync(codegenBin))("hashes types.ts+zod.ts against schemas/ and python/", () => {
     const sourceHash = computeSourceHash();
     expect(sourceHash).toMatch(/^[0-9a-f]{64}$/);
 

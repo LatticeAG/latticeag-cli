@@ -158,6 +158,11 @@ latticeag --config ./my-project/latticeag.json products
 `latticeag doctor` reports per-check rows (verified live):
 
 ```
+
+Doctor exits with status 1 if any check fails, and 0 otherwise; warnings and
+skips alone do not fail it. `--offline` skips HTTP health and git fetch checks,
+but still reports failures from the remaining checks. The same exit rule applies
+to `--json` output.
 pass  node_version        24.19.0
 fail  config_present      not found     # until you run init
 pass  events_package      0.1.0

@@ -57,6 +57,11 @@ Built by [LatticeAG](https://github.com/LatticeAG).
 
 ## Quick Start
 
+This repository (`LatticeAG/latticeag-cli`) is the source for the `latticeag`
+CLI and its `run` command. `latticeag-gateway` is a separate repository; do not
+assume its commits, workspace layout, or release versions match this one. Use
+this repository's revision and instructions when developing or testing the CLI.
+
 ```bash
 # 1. Install prerequisites: Node >= 20.19, pnpm 9.15.0
 node --version   # >= 20.19
@@ -69,11 +74,11 @@ pnpm install
 pnpm build
 
 # 3. Scaffold a project and check setup
-latticeag init
-latticeag doctor
+pnpm exec latticeag init
+pnpm exec latticeag doctor
 
 # 4. Attach to an agent and run it
-latticeag run --attach openai-completions --cmd "npx tsx src/agent.ts"
+pnpm exec latticeag run --attach openai-completions --cmd "npx tsx src/agent.ts"
 
 # Or install the CLI globally
 pnpm add -g @latticeag/cli

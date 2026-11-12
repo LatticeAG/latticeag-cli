@@ -6,7 +6,11 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@latticeag/cli':
+        specifier: workspace:^
+        version: link:packages/cli
 
   examples/runs-on-latticeag:
     dependencies:

@@ -57,6 +57,11 @@ Built by [LatticeAG](https://github.com/LatticeAG).
 
 ## Quick Start
 
+This repository (`LatticeAG/latticeag-cli`) is the source for the `latticeag`
+CLI and its `run` command. `latticeag-gateway` is a separate repository; do not
+assume its commits, workspace layout, or release versions match this one. Use
+this repository's revision and instructions when developing or testing the CLI.
+
 ```bash
 # 1. Install prerequisites: Node >= 20.19, pnpm 9.15.0
 node --version   # >= 20.19
@@ -69,11 +74,11 @@ pnpm install
 pnpm build
 
 # 3. Scaffold a project and check setup
-latticeag init
-latticeag doctor
+pnpm exec latticeag init
+pnpm exec latticeag doctor
 
 # 4. Attach to an agent and run it
-latticeag run --attach openai-completions --cmd "npx tsx src/agent.ts"
+pnpm exec latticeag run --attach openai-completions --cmd "npx tsx src/agent.ts"
 
 # Or install the CLI globally
 pnpm add -g @latticeag/cli
@@ -158,6 +163,11 @@ latticeag --config ./my-project/latticeag.json products
 `latticeag doctor` reports per-check rows (verified live):
 
 ```
+
+Doctor exits with status 1 if any check fails, and 0 otherwise; warnings and
+skips alone do not fail it. `--offline` skips HTTP health and git fetch checks,
+but still reports failures from the remaining checks. The same exit rule applies
+to `--json` output.
 pass  node_version        24.19.0
 fail  config_present      not found     # until you run init
 pass  events_package      0.1.0
@@ -167,6 +177,14 @@ warn  env_OPENAI_API_KEY  absent        # only needed for live kits
 `latticeag run` also reads `--env-file <path>` via dotenv without overriding existing env vars. Hosted LexGateway relay is invite-only; everything else listed above runs locally.
 
 ## Verification
+
+The codegen drift test is skipped when `.venv/bin/datamodel-codegen` is absent.
+To run it locally, create the same environment used by CI:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install 'datamodel-code-generator>=0.26' 'pydantic>=2.10,<3' pytest hatchling
+```
 
 ```bash
 pnpm build       # pnpm -r build

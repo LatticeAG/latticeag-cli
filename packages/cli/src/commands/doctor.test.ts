@@ -20,6 +20,18 @@ const doctorEnv = {
 };
 
 describe("latticeag doctor", () => {
+  it("returns a failure exit code when a check fails, in text and JSON", async () => {
+    const dir = tempDir();
+    const env = { ...doctorEnv, LATTICEAG_CONFIG: path.join(dir, "missing.json") };
+    const text = await runCli(["--cwd", dir, "doctor", "--offline"], { env });
+    expect(text.stdout).toMatch(/^fail\s/m);
+    expect(text.status).toBe(1);
+    const json = await runCli(["--cwd", dir, "doctor", "--offline", "--json"], { env });
+    const envelope = JSON.parse(json.stdout) as { ok: boolean; data: { checks: Array<{ status: string }> } };
+    expect(envelope.data.checks.some((check) => check.status === "fail")).toBe(true);
+    expect(envelope.ok).toBe(false);
+    expect(json.status).toBe(1);
+  });
   it("offline checks emit every check id after init", async () => {
     const dir = tempDir();
     const init = await runCli(

@@ -14,5 +14,8 @@
     "test": "pnpm -r test",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "codegen": "pnpm --filter @latticeag/events codegen"
+  },
+  "devDependencies": {
+    "@latticeag/cli": "workspace:^"
   }
 }
